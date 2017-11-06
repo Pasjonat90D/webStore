@@ -5,6 +5,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js">
+    </script>
+    <script src="/js/controllers.js"></script>
     <title>Produkt</title>
 </head>
 <body>
@@ -13,6 +16,7 @@
         <div class="container">
             <h1>Produkt</h1>
         </div>
+
     </div>
 </section>
 <section class="container">
@@ -27,7 +31,9 @@
                 <strong>Kod produktu: </strong><span class="label label-warning">${product.productId}</span>
             </p>
             <p>
-                <strong>Producent</strong>: ${product.manufacturer}
+                <strong>
+                    <spring:message code="product.manufacturer.label"/>
+                </strong>: ${product.manufacturer}
             </p>
             <p>
                 <strong>Kategoria</strong>: ${product.category}
@@ -36,13 +42,18 @@
                 <strong>Dostępna liczba sztuk</strong>:${product.unitsInStock}
             </p>
             <h4>${product.unitPrice}PLN</h4>
-            <p>
+            <p ng-controller="cartCtrl">
                 <a href="<spring:url value="/products" />" class="btn btndefault">
                     <span class="glyphicon-hand-left glyphicon"></span> Wstecz
                 </a>
-                <a href="#" class="btn btn-warning btn-large">
+                <section class="container" ng-app="cartApp">
+                <a href="#" class="btn btn-warning btn-large" ngclick="addToCart('${product.productId}')">
                     <span class="glyphicon-shopping-cart glyphicon"></span>
                     Zamów teraz
+                </a>
+                </section>
+                <a href="<spring:url value="/cart" />" class="btn btn-default">
+                    <span class="glyphicon-hand-right glyphicon"></span> Koszyk
                 </a>
             </p>
         </div>

@@ -6,9 +6,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 //@EnableWebSecurity
+@Component
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -16,6 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // roles admin allow to access /admin/**
     // custom 403 access denied handler
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
@@ -43,13 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("Admin").password("Admin123").roles("ADMIN");
     }
 
-    /*
-    //Spring Boot configured this already.
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-    }*/
+
+
+
 
 }

@@ -1,22 +1,40 @@
 package com.myProject.webStore.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.myProject.webStore.validator.ProductId;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.math.BigDecimal;
 
+@XmlRootElement(name = "product")
 public class Product {
+
+    @Pattern(regexp="P[0-9]+", message="{Pattern.Product.productId.validation}")
+    @ProductId
     private String productId;
+    @Size(min=4, max=50, message="{Size.Product.name.validation}")
     private String name;
+    @Min(value=0, message="Min.Product.unitPrice.validation}")
+    @Digits(integer=8, fraction=2, message="{Digits.Product.unitPrice.validation}")
+    @NotNull(message= "{NotNull.Product.unitPrice.validation}")
     private BigDecimal unitPrice;
     private String description;
     private String manufacturer;
+    @NotNull(message= "{NotNull.Product.category.validation}")
     private String category;
+    @Min(value=0, message="Min.Product.unitsInStock.validation}")
     private long unitsInStock;
     private long unitsInOrder;
     private boolean discontinued;
     private String condition;
+    @JsonIgnore
     private MultipartFile productImage;
+    private MultipartFile productPdf;
 
     public Product() {
         super();
@@ -61,7 +79,7 @@ public class Product {
     public String getProductId() {
         return productId;
     }
-
+    @XmlElement
     public void setProductId(String productId) {
         this.productId = productId;
     }
@@ -69,7 +87,7 @@ public class Product {
     public String getName() {
         return name;
     }
-
+    @XmlElement
     public void setName(String name) {
         this.name = name;
     }
@@ -77,7 +95,7 @@ public class Product {
     public BigDecimal getUnitPrice() {
         return unitPrice;
     }
-
+    @XmlElement
     public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
@@ -85,7 +103,7 @@ public class Product {
     public String getDescription() {
         return description;
     }
-
+    @XmlElement
     public void setDescription(String description) {
         this.description = description;
     }
@@ -93,7 +111,7 @@ public class Product {
     public String getManufacturer() {
         return manufacturer;
     }
-
+    @XmlElement
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
     }
@@ -101,7 +119,7 @@ public class Product {
     public String getCategory() {
         return category;
     }
-
+    @XmlElement
     public void setCategory(String category) {
         this.category = category;
     }
@@ -109,7 +127,7 @@ public class Product {
     public long getUnitsInStock() {
         return unitsInStock;
     }
-
+    @XmlElement
     public void setUnitsInStock(long unitsInStock) {
         this.unitsInStock = unitsInStock;
     }
@@ -117,7 +135,7 @@ public class Product {
     public long getUnitsInOrder() {
         return unitsInOrder;
     }
-
+    @XmlElement
     public void setUnitsInOrder(long unitsInOrder) {
         this.unitsInOrder = unitsInOrder;
     }
@@ -125,7 +143,7 @@ public class Product {
     public boolean isDiscontinued() {
         return discontinued;
     }
-
+    @XmlElement
     public void setDiscontinued(boolean discontinued) {
         this.discontinued = discontinued;
     }
@@ -133,16 +151,24 @@ public class Product {
     public String getCondition() {
         return condition;
     }
-
+    @XmlElement
     public void setCondition(String condition) {
         this.condition = condition;
     }
-
+    @XmlTransient
     public MultipartFile getProductImage() {
         return productImage;
     }
 
     public void setProductImage(MultipartFile productImage) {
         this.productImage = productImage;
+    }
+
+    public MultipartFile getProductPdf() {
+        return productPdf;
+    }
+
+    public void setProductPdf(MultipartFile productPdf) {
+        this.productPdf = productPdf;
     }
 }
