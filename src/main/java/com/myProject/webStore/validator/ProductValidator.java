@@ -13,6 +13,7 @@ import org.springframework.validation.Validator;
 
 
 public class ProductValidator implements Validator{
+
     @Autowired
     private javax.validation.Validator beanValidator;
     private Set<Validator> springValidators;

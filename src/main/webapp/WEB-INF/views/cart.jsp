@@ -24,7 +24,7 @@
             <a class="btn btn-danger pull-left" ng-click="clearCart()">
                 <span class="glyphicon glyphicon-remove-sign"></span> Wyczyść koszyk
             </a>
-            <a href="#" class="btn btn-success pull-right">
+            <a href=""<spring:url value="/checkout?cartId=${cartId}"/>" class="btn btn-success pull-right">
                 <span class="glyphicon-shopping-cart glyphicon"></span>Kupuję
             </a>
         </div>

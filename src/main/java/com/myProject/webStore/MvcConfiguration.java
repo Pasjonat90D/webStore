@@ -40,13 +40,13 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.springframework.web.util.UrlPathHelper;
 import org.springframework.validation.Validator;
 import org.springframework.webflow.mvc.servlet.FlowHandlerAdapter;
 import org.springframework.webflow.mvc.servlet.FlowHandlerMapping;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.view.AjaxThymeleafViewResolver;
-import org.thymeleaf.spring4.view.FlowAjaxThymeleafView;
+
 
 import javax.servlet.MultipartConfigElement;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ import java.util.Locale;
 		MultipartConfigElement.class })
 @ConditionalOnProperty(prefix = "spring.http.multipart", name = "enabled", matchIfMissing = true)
 @Configuration
-//@EnableWebMvc
+@EnableWebMvc
 @ComponentScan(basePackages = { "com.myProject.webStore.controller" })
 public class MvcConfiguration extends WebMvcConfigurerAdapter
 {
@@ -75,6 +75,10 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter
 			"classpath:/META-INF/resources/", "classpath:/resources/",
 			"classpath:/static/", "classpath:/public/" };
 
+
+	/**
+	 * Configure ResourceHandlers to serve static resources like CSS/ Javascript etc...
+	 */
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
@@ -212,8 +216,7 @@ public Validator validator() {
 	@Autowired
 	private WebFlowConfig webFlowConfig;
 
-	@Autowired
-	private SpringTemplateEngine springTemplateEngine;
+
 
 	@Bean
 	public FlowHandlerMapping flowHandlerMapping() {
@@ -231,12 +234,26 @@ public Validator validator() {
 		return handlerAdapter;
 	}
 
-	@Bean
-	public AjaxThymeleafViewResolver ajaxThymeleafViewResolver() {
-		AjaxThymeleafViewResolver viewResolver = new AjaxThymeleafViewResolver();
-		viewResolver.setViewClass(FlowAjaxThymeleafView.class);
-		viewResolver.setTemplateEngine(springTemplateEngine);
-		return viewResolver;
-	}
+
+	/**
+	 * Configure TilesConfigurer.
+	 */
+//	@Bean
+//	public TilesConfigurer tilesConfigurer(){
+//		TilesConfigurer tilesConfigurer = new TilesConfigurer();
+//		tilesConfigurer.setDefinitions(new String[] {"/WEB-INF/tiles/definition/tile-definition.xml"});
+//		tilesConfigurer.setCheckRefresh(true);
+//		return tilesConfigurer;
+//	}
+//
+//	/**
+//	 * Configure ViewResolvers to deliver preferred views.
+//	 */
+//	@Override
+//	public void configureViewResolvers(ViewResolverRegistry registry) {
+//		TilesViewResolver viewResolver = new TilesViewResolver();
+//		registry.viewResolver(viewResolver);
+//	}
+
 
 }

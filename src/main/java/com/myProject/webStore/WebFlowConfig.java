@@ -47,7 +47,6 @@ public class WebFlowConfig extends AbstractFlowConfiguration {
 
     @Bean
     public MvcViewFactoryCreator mvcViewFactoryCreator() {
-        viewResolvers.add(this.webMvcConfig.ajaxThymeleafViewResolver());
 
         MvcViewFactoryCreator factoryCreator = new MvcViewFactoryCreator();
         factoryCreator.setViewResolvers(viewResolvers);
